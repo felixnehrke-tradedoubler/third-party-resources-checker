@@ -29,11 +29,15 @@ The checker can be run standalone via the command line:
     -h, --help                  output usage information
     -V, --version               output the version number
     -w, --whitelist <filename>  optional JSON file containing URIs and domains that are deemed OK
+    -c, --check-protocol        optional check if the protocol is https
+    -a. --append-headers        optional additional headers as JSON
 
   Examples:
 
     $ third-party-resources-checker http://page.to.be/checked
     $ third-party-resources-checker -w whitelist.json http://page.to.be/checked
+    $ third-party-resources-checker -c http://page.to.be/checked
+    $ third-party-resources-checker -a headers-example.json http://page.to.be/checked
 
 ```
 
