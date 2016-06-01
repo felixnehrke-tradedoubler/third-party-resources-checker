@@ -10,13 +10,15 @@ var spawn = require('child_process').spawn;
 program
     .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
     .usage('[options] URI')
-    .option('-w, --whitelist <filename>', 'optional JSON file containing URIs and domains that are deemed OK');
+    .option('-w, --whitelist <filename>', 'optional JSON file containing URIs and domains that are deemed OK')
+    .option('-c, --check-protocol', 'optional check if the protocol is https')
+    .option('-a, --append-headers <filename>', 'optional additional headers as JSON');
 
 program.on('--help', function() {
     console.log('  Examples:');
     console.log();
-    console.log('    $ third-party-resources-checker http://page.to.be/checked');
-    console.log('    $ third-party-resources-checker -w whitelist.json http://page.to.be/checked');
+    console.log('    $ third-party-resources-checker -c http://page.to.be/checked');
+    console.log('    $ third-party-resources-checker -a headers-example.json http://page.to.be/checked');
     console.log();
   });
 
@@ -27,8 +29,10 @@ if (!program.args.length) program.help();
 var script = fs.realpathSync(__dirname + '/../lib/detect-phantom.js');
 var uri = program.args[0];
 var whitelist = program.whitelist ? program.whitelist : '';
+var checkProtocol = program.checkProtocol ? program.checkProtocol : false;
+var appendHeaders = program.appendHeaders ? program.appendHeaders : '';
 
-var phantomjs = spawn(phantomPath, [script, uri, whitelist]);
+var phantomjs = spawn(phantomPath, [script, uri, whitelist, checkProtocol, appendHeaders]);
 
 phantomjs.stdout.pipe(process.stdout);
 phantomjs.stderr.pipe(process.stderr);
