@@ -30,7 +30,7 @@ The checker can be run standalone via the command line:
     -V, --version               output the version number
     -w, --whitelist <filename>  optional JSON file containing URIs and domains that are deemed OK
     -c, --check-protocol        optional check if the protocol is https
-    -a. --append-headers        optional additional headers as JSON
+    -a, --append-headers        optional additional headers as JSON
 
   Examples:
 
